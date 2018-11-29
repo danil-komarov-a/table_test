@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>test task</title>
+	<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css"/>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+    <script tsrc="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+
+    <script>
+        $(document).ready(function(){
+          $.getJSON( "http://jsonplaceholder.typicode.com/posts", function( data ) {
+              $('#myTable').DataTable({
+                 "data" : data,
+                 "ordering" : false,
+                 "lengthChange" : false,
+                 "bFilter" : false,
+                 "pageLength" : 30,
+                 "pagingType" : "numbers",
+                 "bInfo" : false,
+                  columns : [
+                  {"data" : "id"},
+                  {"data" : "title"},
+                  {"data" : "body"}
+                 ]
+            });
+            });
+        });
+ </script>
+
+<div class="container">
+        <table id="myTable" cellspacing="0">
+	   <thead>
+		  <tr>
+            <th>ID</th>
+            <th>Author</th>
+            <th>Title</th>
+		</tr>
+	   </thead>
+	   <tbody id="table_content">
+        <tr>
+            <td>id</td>
+            <td>title</td>
+            <td>body</td>
+        </tr>
+	   </tbody>
+	   </table>
+</div>
+</body>
+</html>
