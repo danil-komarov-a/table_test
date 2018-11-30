@@ -13,21 +13,32 @@
 
     <script>
         $(document).ready(function(){
-          $.getJSON( "http://jsonplaceholder.typicode.com/posts", function( data ) {
-              $('#myTable').DataTable({
-                 "data" : data,
-                 "ordering" : false,
-                 "lengthChange" : false,
-                 "bFilter" : false,
-                 "pageLength" : 30,
-                 "pagingType" : "numbers",
-                 "bInfo" : false,
-                  columns : [
-                  {"data" : "id"},
-                  {"data" : "title"},
-                  {"data" : "body"}
-                 ]
-            });
+            $.getJSON( "http://jsonplaceholder.typicode.com/posts", function( posts ) {
+                $.getJSON( "https://jsonplaceholder.typicode.com/users", function( users ) {
+                    posts = posts.filter(p => p.title);
+                    var tableData = posts.map((post) => {
+                        var author = users.find((user) => { return user.id === post.userId }).name;                        
+                        return {
+                            id: post.id,
+                            title: post.title,
+                            author
+                        };                                            
+                    });
+                    $('#myTable').DataTable({
+                        "data" : tableData,
+                        "ordering" : false,
+                        "lengthChange" : false,
+                        "bFilter" : false,
+                        "pageLength" : 30,
+                        "pagingType" : "numbers",
+                        "bInfo" : false,
+                        columns : [
+                            {"data" : "id"},
+                            {"data" : "author"},
+                            {"data" : "title"}
+                        ]
+                    });
+                });
             });
         });
  </script>
@@ -44,8 +55,8 @@
 	   <tbody id="table_content">
         <tr>
             <td>id</td>
+            <td>author</td>
             <td>title</td>
-            <td>body</td>
         </tr>
 	   </tbody>
 	   </table>
